@@ -1,0 +1,104 @@
+%% SYSTLC: Linux Generic Real-Time Target \
+%%    TMF: grt_unix.tmf MAKE: make_rtw EXTMODE: no_ext_comm 
+%%
+%% $RCSfile: grt.tlc,v $
+%% $Revision: 1.31.4.8 $
+%% $Date: 2004/07/01 04:40:51 $
+%%
+%% Copyright 1994-2004 The MathWorks, Inc.
+%% Abstract: Generic real-time system target file.
+%%
+%selectfile NULL_FILE
+
+%assign TargetType = "RT"
+%assign Language   = "C"
+%assign GenRTModel = 1
+%assign _GRT_      = 1
+
+%assign MatFileLogging = 1
+
+%include "codegenentry.tlc"
+
+
+%% The contents between 'BEGIN_RTW_OPTIONS' and 'END_RTW_OPTIONS' in this file
+%% are used to maintain backward compatibility to R13 and preR13 custom target 
+%% file only.  If you want to use this file as a template to develop your
+%% own system target file, you need to remove the 'CONFIGSET_TARGET_COMPONENT'
+%% section at the end of this file.
+%%
+/%
+  BEGIN_RTW_OPTIONS
+
+rtwoptions(1).prompt = 'Target';
+rtwoptions(1).type = 'Category';
+rtwoptions(1).enable = 'on';  
+rtwoptions(1).default = 7; % Number of items under this category
+                               % excluding this one.
+rtwoptions(1).popupstrings  = '';
+rtwoptions(1).tlcvariable   = '';
+rtwoptions(1).tooltip       = '';
+rtwoptions(1).callback      = '';
+rtwoptions(1).opencallback  = '';
+rtwoptions(1).closecallback = '';
+rtwoptions(1).makevariable  = '';
+rtwoptions(1).callback = '';  
+
+rtwoptions(2).prompt = 'Your target-user-name';
+rtwoptions(2).type = 'Edit';
+rtwoptions(2).default = 'rtw';
+rtwoptions(2).tlcvariable = 'UN_target';
+rtwoptions(2).tooltip = ...
+['Define target-user-name for communication with target hardware.'];
+rtwoptions(2).callback = '';  
+
+rtwoptions(3).prompt = 'Target IP address';
+rtwoptions(3).type = 'Edit';
+rtwoptions(3).default = '192.168.123.199';
+rtwoptions(3).tlcvariable = 'IP_target';
+rtwoptions(3).tooltip = ...
+['Define IP address for communication, upload and execution of the code.'];
+rtwoptions(3).callback = '';  
+
+rtwoptions(4).prompt = 'Executive options';
+rtwoptions(4).type = 'Edit';
+rtwoptions(4).default = '-tf inf -w -port 17725';
+rtwoptions(4).tlcvariable = 'EX_target';
+rtwoptions(4).tooltip = ...
+['How to execute the code.'];
+rtwoptions(4).callback = '';  
+
+rtwoptions(5).prompt = 'Operations (for script go) over generated code';
+rtwoptions(5).type = 'Popup';
+rtwoptions(5).default = 'compile_copy_execute';
+rtwoptions(5).popupstrings = 'compile_copy_execute|compile|compile_copy';
+rtwoptions(5).tlcvariable = 'C_target';
+rtwoptions(5).callback = '';  
+rtwoptions(5).tooltip = [''];
+
+rtwoptions(6).prompt = 'CANopen blockset support';
+rtwoptions(6).type = 'Checkbox';
+rtwoptions(6).default = 'off';
+rtwoptions(6).tlcvariable = 'CANopen_support';
+rtwoptions(6).callback = '';  
+rtwoptions(6).tooltip = ['Enable using CANopen blockset in this model. If it is not used it has to be unchecked.'];
+
+%rtwoptions(7).prompt = 'Generate script';
+%rtwoptions(7).type = 'Pushbutton';
+%rtwoptions(7).tlcvariable = '';
+%rtwoptions(7).callback = 'linux_grt_targetcallback(hDlg,hSrc,''UN_target'',''IP_target'',''EX_target'',''C_target'')';  
+%rtwoptions(7).tooltip = [''];
+
+
+  %----------------------------------------%
+  % Configure RTW code generation settings %
+  %----------------------------------------%
+  
+  rtwgensettings.BuildDirSuffix = 'linux_grt_rtw';
+  rtwgensettings.DerivedFrom = 'grt.tlc';
+  rtwgensettings.Version = '1';
+  %%%%%If it is rtwgensettings.SelectCallback enable, code generation make go file with default TLC variables.
+  %rtwgensettings.SelectCallback = ['linux_grt_targetcallback(hDlg,hSrc,''UN_target'',''IP_target'',''EX_target'',''C_target'')'];  
+  %rtwgensettings.PostApplyCallback = ['linux_grt_targetcallback(hDlg,hSrc,''UN_target'',''IP_target'',''EX_target'',''C_target'')'];  
+  END_RTW_OPTIONS 
+  %/
+

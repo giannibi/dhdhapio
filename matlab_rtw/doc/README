@@ -1,0 +1,7 @@
+DHDHapIO - An experimental library for using Force Dimension(TM) haptic
+devices in Simulink/RTW using the DHD library
+
+(C) 2011 Gianni Bianchini <giannibi@dii.unisi.it>
+
+This distribution includes a slightly modified version of the Real Time
+Linux target files for the Simulink Real-Time Workshop.

@@ -1,0 +1,39 @@
+DHDHapIO Installation instructions
+----------------------------------
+
+1) Make sure the dynamic version of the DHD libraries is installed.
+It is strongly suggested that the root of the DHD installation be
+/usr/local/, otherwise several tweaks to this procedure and to the use
+of DHDHapIO may be necessary.
+
+2) Copy additional/dhd/lib/libdhd.la to the lib/ directory of your DHD library
+installation (i.e., /usr/local/lib). If DHD is not installed in /usr/local,
+then you will have to edit the "libdir" entry in this file to reflect the
+actual DHD installation path, as well as to change the DHDROOT definition
+in the Makefile.
+ 
+3) Make sure that the "mex" command for the MATLAB version you
+want to use is in your PATH and that you have the basic GNU development
+tools (gcc, make, etc.) installed.
+It is suggested to make a symbolic link to the mex compiler 
+($MATLAB_VERSION_PATH/bin/mex) to your /usrl/local/bin.
+
+4) Type "make". This should compile the MEX file dhdhapio.mexglx, dhdhapio.mexa64, dhdhapio.mexmaci or dhdhapio.mexmaci64 depending on your architecture.
+
+Steps 5 and 6 apply if you want to use DHDHapIO with Real Time Workshop
+and the linux realtime target (very likely).
+
+5) Copy additional/linux_grt_target to MATLAB_ROOT/rtw/c, where
+MATLAB_ROOT is the path to the root of you MATLAB installation.
+
+6) Modify the template makefile mygrt_unix.tmf to reflect MATLAB_ROOT
+ALT_MATLAB_ROOT (set it to the same as MATLAB_ROOT) in your system.
+
+7) Use the provided Simulink model testhapio.mdl as a template for
+your models. The MATLAB workspace variable "numdevices" must be set equal
+to the number of devices you want your model to be used for.
+
+8) If you are compiling your models for the Real Time Workshop, you are
+advised to use the DHDHapIO root directory as the MATLAB working directory,
+as Simulink expects to find some files there by default, otherwise
+some tweaks to the model build procedure will probably be required.

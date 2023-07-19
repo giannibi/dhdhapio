@@ -1,0 +1,38 @@
+In order to open testhaptio.mdl, the following condtions are needed:
+ i) numdevices variable must be defined (with the current number of 
+ haptic interfaces you are using)
+ ii) the directory, along with its subfolders, must be in the current Matlab path.
+ 	If it is not, an quick fix is:
+ 	>>addpath(genpath(pwd))
+
+
+NOTES FOR LINUX USERS
+
+The library usb-1.0 needs privileges to access any USB drive, including an
+haptic interface. Thus, to make the mex work two solutions are available:
+ i) launch matlab with root privileges: $ sudo matlab
+ ii) add some rules that allow your user to access the USB
+
+
+First option is strongly discouraged, but can be used on first instance to
+check where mex compilation was successfull and effective works.
+
+
+For second option following steps are required:
+
+1) Run $ lsusb and determine your haptic interface identifiels, in my case:
+	Bus 002 Device 006: ID 0403:cb48 Future Technology Devices International, Ltd
+
+2) cd /etc/udev/rules.d/ and add a new file called 71-usb-haptic-interface.rules.
+Beware that such file is to be the last rule, so replace 71 with the maximum 
+number among your rules.
+
+3) add the following text into the file:
+
+# USB devices (usbfs replacement)
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0403" , ATTRS{idProduct}=="cb48", GROUP="davide", MODE="660"
+
+4) Note that ATTRS{idVendor} and ATTRS{idProduct} must match corresponding data 
+of your haptic interface (which you found out with step 1).
+
+5) reboot your system to make your chages effective.
